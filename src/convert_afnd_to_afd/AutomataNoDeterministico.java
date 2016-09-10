@@ -6,9 +6,9 @@ import java.util.ArrayList;
  *
  * @author Mario
  */
-public class Automata {
+public class AutomataNoDeterministico {
 
-    public Automata() {
+    public AutomataNoDeterministico() {
         E = new ArrayList<>();
         Q = new ArrayList<>();
         F = new ArrayList<>();

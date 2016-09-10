@@ -7,12 +7,12 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Isa
  */
 public class AutomataDeterministico {
+
     private ArrayList<String> E; //alfabeto
     private ArrayList<String> Q;  //estados
     private String[][] matriz; //matriz 
@@ -26,26 +26,27 @@ public class AutomataDeterministico {
         this.F = estados_finales;
         this.I = estados_inicial;
     }
-    public AutomataDeterministico(){
-         E = new ArrayList<>();
+
+    public AutomataDeterministico() {
+        E = new ArrayList<>();
         Q = new ArrayList<>();
         F = new ArrayList<>();
     }
 
-    public ArrayList<String> getAlfabeto() {
+    public ArrayList<String> getE() {
         return E;
     }
 
-    public void setAlfabeto(ArrayList<String> alfabeto) {
-        this.E = alfabeto;
+    public void setE(ArrayList<String> E) {
+        this.E = E;
     }
 
-    public ArrayList<String> getEstados() {
+    public ArrayList<String> getQ() {
         return Q;
     }
 
-    public void setEstados(ArrayList<String> estados) {
-        this.Q = estados;
+    public void setQ(ArrayList<String> Q) {
+        this.Q = Q;
     }
 
     public String[][] getMatriz() {
@@ -56,22 +57,22 @@ public class AutomataDeterministico {
         this.matriz = matriz;
     }
 
-    public ArrayList<String> getEstados_finales() {
+    public ArrayList<String> getF() {
         return F;
     }
 
-    public void setEstados_finales(ArrayList<String> estados_finales) {
-        this.F = estados_finales;
+    public void setF(ArrayList<String> F) {
+        this.F = F;
     }
 
-    public String getEstados_inicial() {
+    public String getI() {
         return I;
     }
 
-    public void setEstados_inicial(String estados_inicial) {
-        this.I = estados_inicial;
+    public void setI(String I) {
+        this.I = I;
     }
-        @Override
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < matriz.length; i++) {
@@ -82,6 +83,5 @@ public class AutomataDeterministico {
         }
         return s.toString();
     }
-   
-    
+
 }
