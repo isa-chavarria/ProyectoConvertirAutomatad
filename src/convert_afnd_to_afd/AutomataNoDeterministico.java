@@ -65,36 +65,58 @@ public class AutomataNoDeterministico {
         }
         return s.toString();
     }
-    public ArrayList<String> getEstado(String estado, String lenguaje){
-    ArrayList<String> ListaEstados;
-    int i,j;
-    for(i= 0; i<matriz.length;i++){
-   if (matriz[0][i].equals(lenguaje)){
-       break;
-      }
-  }
-    for(j=0;j<matriz.length;j++){
-    if(matriz[j][0].equals(estado)){
-        break;
-    }}
-    ListaEstados = matriz[j][i];
-    return ListaEstados;
+
+    public ArrayList<String> getEstado(String estado, String lenguaje) {
+        ArrayList<String> ListaEstados;
+        int i, j;
+        for (i = 0; i < matriz.length; i++) {
+            if (matriz[0][i].equals(lenguaje)) {
+                break;
+            }
+        }
+        for (j = 0; j < matriz.length; j++) {
+            if (matriz[j][0].equals(estado)) {
+                break;
+            }
+        }
+        ListaEstados = matriz[j][i];
+        return ListaEstados;
     }
-   public AutomataDeterministico convertir_AFND_TO_AFD(){
-   AutomataDeterministico automataDeterministico = new AutomataDeterministico();
-   newE.add(I);
-   do{
-   for(String estado : newE){
-       for(String lenguaje : E){
-       
-       }
-   }
-   
-   }
-   while(!newE.isEmpty());
-   
-   return automataDeterministico;
-   }
+
+    public ArrayList<String> getEstadosConTranVacias(ArrayList<String> estados) {
+        ArrayList<String> ListaEstadosConCerradura = new ArrayList<>();
+        for (int i = 0; i < estados.size(); i++) {
+            ListaEstadosConCerradura.add(estados.get(i));
+        }
+        
+        
+        
+        return ListaEstadosConCerradura;
+
+    }
+
+   /* public ArrayList<String> AddNewEtemp(ArrayList<String> estados) {
+     
+    }*/
+
+    public AutomataDeterministico convertir_AFND_TO_AFD() {
+        AutomataDeterministico automataDeterministico = new AutomataDeterministico();
+        newE.add(I);
+        ArrayList<String> estados;
+        ArrayList<String> estadosVacios;
+        do {
+            for (String estado : newE) {
+                for (String lenguaje : E) {
+                    estados = getEstado(estado, lenguaje);
+                    estadosVacios = getEstadosConTranVacias(estados);
+
+                }
+            }
+
+        } while (!newE.isEmpty());
+
+        return automataDeterministico;
+    }
 
     private ArrayList<String> E; //alfabeto
     private ArrayList<String> Q;  //estados
