@@ -2,6 +2,7 @@ package convert_afnd_to_afd;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,7 +20,7 @@ import org.xml.sax.SAXException;
 public class ReadXML {
 
     public ReadXML() {
-        automata = new Automata();
+        automata = new AutomataNoDeterministico();
     }
 
     public void read(String file) {
@@ -67,13 +68,13 @@ public class ReadXML {
                     }
                 }
             }
-            automata.setMatriz(new String[automata.getQ().size() + 1][automata.getE().size() + 1]);
-            automata.getMatriz()[0][0] = " ";
+            automata.setMatriz(new ArrayList[automata.getQ().size() + 1][automata.getE().size() + 1]);
+            automata.getMatriz()[0][0] = new ArrayList();
             for (int u = 0; u < automata.getE().size(); u++) {     //llena la primera fila con el alfabeto
-                automata.getMatriz()[0][u + 1] = automata.getE().get(u);
+                automata.getMatriz()[0][u + 1].add(automata.getE().get(u));
             }
             for (int d = 0; d < automata.getQ().size(); d++) {
-                automata.getMatriz()[d + 1][0] = automata.getQ().get(d);
+                automata.getMatriz()[d + 1][0].add(automata.getQ().get(d));
             }
 
             for (int k = 0; k < trans.getLength(); k++) {
@@ -90,7 +91,7 @@ public class ReadXML {
                     int y = automata.getE().indexOf(m);
                     String c = eElement.getElementsByTagName("to").item(0).getTextContent();
 
-                    automata.getMatriz()[x + 1][y + 1] = c;
+                    automata.getMatriz()[x + 1][y + 1].add(c);
 
                 }
             }
@@ -100,35 +101,13 @@ public class ReadXML {
         }
     }
 
-    public Automata getAutomata() {
+    public AutomataNoDeterministico getAutomata() {
         return automata;
     }
 
-    public void setAutomata(Automata automata) {
+    public void setAutomata(AutomataNoDeterministico automata) {
         this.automata = automata;
     }
 
-    public boolean analiza(String x) {
-        String text=x.trim();
-        String estado = automata.getI();
-        int estadox = automata.getQ().indexOf(estado);
-        for (int i = 0; i < text.length(); i++) {
-            if (automata.getE().contains(String.valueOf(text.charAt(i)))) {  //si esta en el alfabeto
-                int f=automata.getE().indexOf(String.valueOf(text.charAt(i)));
-                estado=automata.getMatriz()[estadox+1][f+1];    //cambio de estado
-                estadox = automata.getQ().indexOf(estado);
-                if(estado==null){
-                    return false;
-                }
-                if(i==text.length()-1 && automata.getF().contains(estado)){ //si esta en el ultimo char y esta en un estado final
-                    return true;
-                }
-                
-            } else {
-               return false; 
-            }
-        }
-        return false;
-    }
-    private Automata automata;
+    private AutomataNoDeterministico automata;
 }
