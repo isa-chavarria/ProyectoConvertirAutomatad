@@ -2,7 +2,6 @@ package convert_afnd_to_afd;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -68,7 +67,7 @@ public class ReadXML {
                     }
                 }
             }
-            automata.setMatriz(new ArrayList[automata.getQ().size() + 1][automata.getE().size() + 1]);
+            automata.setMatriz(new String[automata.getQ().size() + 1][automata.getE().size() + 1]);
             automata.getMatriz()[0][0] = " ";
             for (int u = 0; u < automata.getE().size(); u++) {     //llena la primera fila con el alfabeto
                 automata.getMatriz()[0][u + 1] = automata.getE().get(u);

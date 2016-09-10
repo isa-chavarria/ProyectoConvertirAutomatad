@@ -30,11 +30,11 @@ public class Automata {
         this.Q = Q;
     }
 
-    public ArrayList<String>[][] getMatriz() {
+    public String[][] getMatriz() {
         return matriz;
     }
 
-    public void setMatriz(ArrayList<String>[][] matriz) {
+    public void setMatriz(String[][] matriz) {
         this.matriz = matriz;
     }
 
@@ -69,7 +69,7 @@ public class Automata {
 
     private ArrayList<String> E; //alfabeto
     private ArrayList<String> Q;  //estados
-    private ArrayList<String>[][] matriz; //matriz de mapeo
+    private String[][] matriz; //matriz de mapeo
     private ArrayList<String> F; //estados finales
     private String I; //estado inicial
 }
