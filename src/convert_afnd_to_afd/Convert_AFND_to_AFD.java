@@ -5,6 +5,10 @@
  */
 package convert_afnd_to_afd;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+
 /**
  *
  * @author Mario
@@ -15,8 +19,36 @@ public class Convert_AFND_to_AFD {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        WriteXML.writeXMLFile(null, "fna");
+        ReadXML xml = new ReadXML();
+       
+        xml.read(chooseFile().getAbsolutePath());
+        
+        
     }
+    private static File chooseFile() {
+        File r = null;
+        JFileChooser fc = new JFileChooser();
 
+        fc.setDialogTitle("Cargar el Automata");
+
+        fc.setFileFilter(new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                return f.isDirectory() || f.getName().endsWith(".jff");
+            }
+
+            @Override
+            public String getDescription() {
+                return "Automatas";
+            }
+
+        });
+
+        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            r = fc.getSelectedFile();
+        }
+
+        return r;
+    }
 }

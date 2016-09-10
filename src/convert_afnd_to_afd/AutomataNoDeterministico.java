@@ -30,11 +30,11 @@ public class AutomataNoDeterministico {
         this.Q = Q;
     }
 
-    public String[][] getMatriz() {
+    public ArrayList<String>[][] getMatriz() {
         return matriz;
     }
 
-    public void setMatriz(String[][] matriz) {
+    public void setMatriz(ArrayList<String>[][] matriz) {
         this.matriz = matriz;
     }
 
@@ -69,7 +69,7 @@ public class AutomataNoDeterministico {
 
     private ArrayList<String> E; //alfabeto
     private ArrayList<String> Q;  //estados
-    private String[][] matriz; //matriz de mapeo
+    private ArrayList<String>[][] matriz; //matriz de mapeo
     private ArrayList<String> F; //estados finales
     private String I; //estado inicial
 }
