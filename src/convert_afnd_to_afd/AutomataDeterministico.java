@@ -13,34 +13,39 @@ import java.util.ArrayList;
  * @author Isa
  */
 public class AutomataDeterministico {
-    private ArrayList<String> alfabeto; //alfabeto
-    private ArrayList<String> estados;  //estados
+    private ArrayList<String> E; //alfabeto
+    private ArrayList<String> Q;  //estados
     private String[][] matriz; //matriz 
-    private ArrayList<String> estados_finales; //estados finales
-    private String estados_inicial; //estado inicial
+    private ArrayList<String> F; //estados finales
+    private String I; //estado inicial
 
     public AutomataDeterministico(ArrayList<String> alfabeto, ArrayList<String> estados, String[][] matriz, ArrayList<String> estados_finales, String estados_inicial) {
-        this.alfabeto = alfabeto;
-        this.estados = estados;
+        this.E = alfabeto;
+        this.Q = estados;
         this.matriz = matriz;
-        this.estados_finales = estados_finales;
-        this.estados_inicial = estados_inicial;
+        this.F = estados_finales;
+        this.I = estados_inicial;
+    }
+    public AutomataDeterministico(){
+         E = new ArrayList<>();
+        Q = new ArrayList<>();
+        F = new ArrayList<>();
     }
 
     public ArrayList<String> getAlfabeto() {
-        return alfabeto;
+        return E;
     }
 
     public void setAlfabeto(ArrayList<String> alfabeto) {
-        this.alfabeto = alfabeto;
+        this.E = alfabeto;
     }
 
     public ArrayList<String> getEstados() {
-        return estados;
+        return Q;
     }
 
     public void setEstados(ArrayList<String> estados) {
-        this.estados = estados;
+        this.Q = estados;
     }
 
     public String[][] getMatriz() {
@@ -52,19 +57,19 @@ public class AutomataDeterministico {
     }
 
     public ArrayList<String> getEstados_finales() {
-        return estados_finales;
+        return F;
     }
 
     public void setEstados_finales(ArrayList<String> estados_finales) {
-        this.estados_finales = estados_finales;
+        this.F = estados_finales;
     }
 
     public String getEstados_inicial() {
-        return estados_inicial;
+        return I;
     }
 
     public void setEstados_inicial(String estados_inicial) {
-        this.estados_inicial = estados_inicial;
+        this.I = estados_inicial;
     }
         @Override
     public String toString() {
