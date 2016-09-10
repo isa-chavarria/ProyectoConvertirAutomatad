@@ -16,6 +16,7 @@ public class Convert_AFND_to_AFD {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        WriteXML.writeXMLFile(null, "fna");
     }
-    
+
 }
