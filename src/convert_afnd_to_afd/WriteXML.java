@@ -24,7 +24,7 @@ import org.w3c.dom.Element;
  */
 public class WriteXML {
 
-    public static void writeXMLFile(Automata automata, String file) {
+    public static void writeXMLFile(AutomataDeterministico automata, String file) {
         try {
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
