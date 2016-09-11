@@ -59,7 +59,14 @@ public class AutomataNoDeterministico {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
-                s.append(matriz[i][j]).append(" ");
+                s.append("[");
+                for (int k = 0; k < matriz[i][j].size(); k++) {
+                    s.append(matriz[i][j].get(k));
+                }
+                if (matriz[i][j].isEmpty()) {
+                    s.append("X");
+                }
+                s.append("]").append(" ");
             }
             s.append("\n");
         }
@@ -82,7 +89,7 @@ public class AutomataNoDeterministico {
         ListaEstados = matriz[j][i];
         return ListaEstados;
     }
-
+    
     public ArrayList<String> getEstadosConTranVacias(ArrayList<String> estados) {
         ArrayList<String> ListaEstadosConCerradura = new ArrayList<>();
         for (int i = 0; i < estados.size(); i++) {
@@ -109,10 +116,8 @@ public class AutomataNoDeterministico {
                 for (String lenguaje : E) {
                     estados = getEstado(estado, lenguaje);
                     estadosVacios = getEstadosConTranVacias(estados);
-
                 }
             }
-
         } while (!newE.isEmpty());
 
         return automataDeterministico;

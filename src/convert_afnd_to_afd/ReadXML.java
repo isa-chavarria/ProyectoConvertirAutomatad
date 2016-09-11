@@ -69,7 +69,11 @@ public class ReadXML {
                 }
             }
             automata.setMatriz(new ArrayList[automata.getQ().size() + 1][automata.getE().size() + 1]);
-            automata.getMatriz()[0][0] = new ArrayList();
+            for (int i = 0; i < automata.getMatriz().length; i++) {
+                for (int j = 0; j < automata.getMatriz()[0].length; j++) {
+                    automata.getMatriz()[i][j] = new ArrayList<>();
+                }
+            }
             for (int u = 0; u < automata.getE().size(); u++) {     //llena la primera fila con el alfabeto
                 automata.getMatriz()[0][u + 1].add(automata.getE().get(u));
             }
@@ -95,7 +99,7 @@ public class ReadXML {
 
                 }
             }
-
+            System.out.println(automata.toString());
         } catch (ParserConfigurationException | SAXException | IOException | DOMException e) {
             System.err.println(e.getMessage());
         }
