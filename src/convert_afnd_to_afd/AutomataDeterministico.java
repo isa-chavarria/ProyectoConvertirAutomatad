@@ -19,14 +19,6 @@ public class AutomataDeterministico {
     private ArrayList<String> F; //estados finales
     private String I; //estado inicial
 
-    public AutomataDeterministico(ArrayList<String> alfabeto, ArrayList<String> estados, String[][] matriz, ArrayList<String> estados_finales, String estados_inicial) {
-        this.E = alfabeto;
-        this.Q = estados;
-        this.matriz = matriz;
-        this.F = estados_finales;
-        this.I = estados_inicial;
-    }
-
     public AutomataDeterministico() {
         E = new ArrayList<>();
         Q = new ArrayList<>();
@@ -72,16 +64,17 @@ public class AutomataDeterministico {
     public void setI(String I) {
         this.I = I;
     }
-    @Override
-    public String toString() {
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[0].length; j++) {
-                s.append(matriz[i][j]).append(" ");
-            }
-            s.append("\n");
-        }
-        return s.toString();
-    }
+
+//    @Override
+//    public String toString() {
+//        StringBuilder s = new StringBuilder();
+//        for (int i = 0; i < matriz.length; i++) {
+//            for (int j = 0; j < matriz[0].length; j++) {
+//                s.append(matriz[i][j]).append(" ");
+//            }
+//            s.append("\n");
+//        }
+//        return s.toString();
+//    }
 
 }

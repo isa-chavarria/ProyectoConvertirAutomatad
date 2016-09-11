@@ -100,6 +100,7 @@ public class AutomataNoDeterministico {
         for (int i = 0; i < estados.size(); i++) {
             ListaEstadosConCerradura.add(estados.get(i));
         }
+<<<<<<< Updated upstream
         int i;
         for (i = 0; i < matriz.length; i++) {
             if (matriz[0][i].equals("")) {
@@ -114,14 +115,34 @@ public class AutomataNoDeterministico {
                 }
             }
         }
+=======
+>>>>>>> Stashed changes
 
         return ListaEstadosConCerradura;
 
     }
 
+<<<<<<< Updated upstream
    /* public ArrayList<String> AddNewEtemp(ArrayList<String> estados) {
 
     }*/
+=======
+    /* public ArrayList<String> AddNewEtemp(ArrayList<String> estados) {
+     
+     }*/
+    public void setToNewMatriz(ArrayList<Mapeo> mapa, AutomataDeterministico d, String from, String read, String to) {
+        d.getQ().add(to);
+        mapa.add(new Mapeo(from,read,to));
+    }
+
+    public void setMatrizAutodeterministica(AutomataNoDeterministico nd, AutomataDeterministico d) {
+        for (int i = 0; i < nd.getE().size(); i++) {
+            if (!nd.getE().get(i).equals("")) {
+                d.getE().add(nd.getE().get(i));
+            }
+        }
+    }
+>>>>>>> Stashed changes
 
     public String addAndGetNewState(ArrayList<String> listaVacios){
         listaVacios.sort(null);
@@ -140,6 +161,7 @@ public class AutomataNoDeterministico {
 
     public AutomataDeterministico convertir_AFND_TO_AFD() {
         AutomataDeterministico automataDeterministico = new AutomataDeterministico();
+        ArrayList<Mapeo> mapa = new ArrayList<>();
         newE.add(I);
         ArrayList<String> estados;
         ArrayList<String> estadosVacios;
