@@ -1,6 +1,7 @@
 package convert_afnd_to_afd;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -12,6 +13,9 @@ public class AutomataNoDeterministico {
         E = new ArrayList<>();
         Q = new ArrayList<>();
         F = new ArrayList<>();
+
+        contador = 0;
+        hashMap = new HashMap<>();
     }
 
     public ArrayList<String> getE() {
@@ -89,22 +93,36 @@ public class AutomataNoDeterministico {
         ListaEstados = matriz[j][i];
         return ListaEstados;
     }
-    
+
     public ArrayList<String> getEstadosConTranVacias(ArrayList<String> estados) {
         ArrayList<String> ListaEstadosConCerradura = new ArrayList<>();
         for (int i = 0; i < estados.size(); i++) {
             ListaEstadosConCerradura.add(estados.get(i));
         }
-        
-        
-        
+
+
+
         return ListaEstadosConCerradura;
 
     }
 
    /* public ArrayList<String> AddNewEtemp(ArrayList<String> estados) {
-     
+
     }*/
+
+    public String addAndGetNewState(ArrayList<String> listaVacios){
+        listaVacios.sort(null);
+        String key = "";
+        for(String str : listaVacios){
+            key += str;
+        }
+        String estado = hashMap.get(key);
+        if(estado == null) {
+            hashMap.put(key, "q" + contador);
+            contador++;
+        }
+        return estado;
+    }
 
     public AutomataDeterministico convertir_AFND_TO_AFD() {
         AutomataDeterministico automataDeterministico = new AutomataDeterministico();
@@ -130,4 +148,6 @@ public class AutomataNoDeterministico {
     private String I; //estado inicial
     private ArrayList<String> newE;
     private ArrayList<String> newEtemp;
+    private HashMap<String, String> hashMap;
+    int contador;
 }
