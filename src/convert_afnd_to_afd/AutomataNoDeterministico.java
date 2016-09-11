@@ -96,11 +96,24 @@ public class AutomataNoDeterministico {
 
     public ArrayList<String> getEstadosConTranVacias(ArrayList<String> estados) {
         ArrayList<String> ListaEstadosConCerradura = new ArrayList<>();
+    
         for (int i = 0; i < estados.size(); i++) {
             ListaEstadosConCerradura.add(estados.get(i));
         }
-
-
+        int i;
+        for (i = 0; i < matriz.length; i++) {
+            if (matriz[0][i].equals("")) {
+                break;
+            }
+        }
+        for (int k = 0; k < estados.size(); k++) {
+            for (int j = 0; j < matriz.length; j++) {
+                if (estados.get(k).equals(matriz[j][0])) {
+                    ListaEstadosConCerradura.addAll(matriz[j][i]);
+                    break;
+                }
+            }
+        }
 
         return ListaEstadosConCerradura;
 
@@ -119,6 +132,7 @@ public class AutomataNoDeterministico {
         String estado = hashMap.get(key);
         if(estado == null) {
             hashMap.put(key, "q" + contador);
+            newEtemp.add(estado);
             contador++;
         }
         return estado;
@@ -134,8 +148,12 @@ public class AutomataNoDeterministico {
                 for (String lenguaje : E) {
                     estados = getEstado(estado, lenguaje);
                     estadosVacios = getEstadosConTranVacias(estados);
+                    String est = addAndGetNewState(estadosVacios);
+                    
                 }
             }
+            newE.clear();
+            newE = newEtemp;
         } while (!newE.isEmpty());
 
         return automataDeterministico;
