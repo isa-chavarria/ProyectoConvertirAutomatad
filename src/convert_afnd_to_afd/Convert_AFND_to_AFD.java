@@ -22,6 +22,7 @@ public class Convert_AFND_to_AFD {
         ReadXML xml = new ReadXML();
        
         xml.read(chooseFile().getAbsolutePath());
+        WriteXML.writeXMLFile(xml.getAutomata().convertir_AFND_TO_AFD(),"C://Users//malvarado//Desktop//AFD");
         
         
     }
