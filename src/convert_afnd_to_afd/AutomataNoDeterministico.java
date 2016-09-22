@@ -15,7 +15,7 @@ public class AutomataNoDeterministico {
         F = new ArrayList<>();
         newE = new ArrayList<>();
         newEtemp = new ArrayList<>();
-        contador = 0;
+        contador = -1;
         hashMap = new HashMap<>();
     }
 
@@ -110,8 +110,7 @@ public class AutomataNoDeterministico {
     /* public ArrayList<String> AddNewEtemp(ArrayList<String> estados) {
      
      }*/
-    public void setToNewMatriz(ArrayList<Mapeo> mapa, AutomataDeterministico d, String from, String read, String to) {
-        d.getQ().add(to);
+    public void setToNewMatriz(ArrayList<Mapeo> mapa, String from, String read, String to) {
         mapa.add(new Mapeo(from, read, to));
     }
 
@@ -124,28 +123,28 @@ public class AutomataNoDeterministico {
     }
 
     public String addAndGetNewState(ArrayList<String> listaVacios, String estadoNuevo) {
-        listaVacios.sort(null);
-        ArrayList<String> estados = new ArrayList<>();
-        estados = hashMap.get(estadoNuevo);
-        if (estados == null || !estados.equals(listaVacios)) {
-            hashMap.put("" + contador, listaVacios);
-            contador++;
-            newEtemp.add("" + contador);
-            return "" + contador;
+        //listaVacios.sort(null);
+        for (int i = 0; i <= contador; i++) {
+            if (listaVacios == hashMap.get(("" + i))) {
+                return "" + i;
+            }
         }
-        return null;
+        contador++;
+        hashMap.put("" + contador, listaVacios);
+        newEtemp.add("" + contador);
+        return "" + contador;
+
     }
 
     public AutomataDeterministico convertir_AFND_TO_AFD() {
         AutomataDeterministico automataDeterministico = new AutomataDeterministico();
-        setMatrizAutodeterministica(automataDeterministico);
         ArrayList<Mapeo> mapa = new ArrayList<>();
         newE.add(I);
         ArrayList<String> estados = new ArrayList<>();
         ArrayList<String> estadosVacios = new ArrayList<>();
         estadosVacios = getEstadosConTranVacias(newE);
         String est = addAndGetNewState(estadosVacios, "");
-        newE = newEtemp;
+        newE = hashMap.get("" + 0);
         for (String nuevoEstado : newEtemp) {
             for (String estado : newE) {
                 for (String lenguaje : E) {
@@ -154,16 +153,50 @@ public class AutomataNoDeterministico {
                         if (!estados.isEmpty()) {
                             estadosVacios = getEstadosConTranVacias(estados);
                             est = addAndGetNewState(estadosVacios, nuevoEstado);
-                            setToNewMatriz(mapa, automataDeterministico, estado, lenguaje, est);
+                            setToNewMatriz(mapa, estado, lenguaje, est);
                         } else {
-                            setToNewMatriz(mapa, automataDeterministico, estado, lenguaje, "");
+                            setToNewMatriz(mapa, estado, lenguaje, ""); //va a un estado de error con ""
                         }
                     }
                 }
             }
             newE = hashMap.get(nuevoEstado);
         }
-
+        setMatrizAutodeterministica(automataDeterministico);  //setea el alfabeto
+        automataDeterministico.setI("0");  //setea estado inicial
+        for (int i = 0; i <= contador; i++) {
+            for (int j = 0; j < getF().size(); j++) {
+                if (hashMap.get(String.format("%s", i)).contains(getF().get(j))) { // setea los estados finales
+                    automataDeterministico.getF().add(String.format("%s", i));
+                }
+            }
+        }
+        automataDeterministico.setQ(newEtemp);   //setea los estados
+        int cont = 0;
+        for (String alfabeto : E) {
+            if (!alfabeto.equals("")) {
+                cont++;
+            }
+        }
+        automataDeterministico.setMatriz(new String[newEtemp.size() + 1][cont + 1]);   //inicializa la matriz
+        for (int i = 0; i < automataDeterministico.getMatriz().length; i++) {
+            for (int j = 0; j < automataDeterministico.getMatriz()[0].length; j++) {
+                automataDeterministico.getMatriz()[i][j] = "";
+            }
+        }
+        for (int i = 1; i < automataDeterministico.getMatriz().length; i++) {
+            automataDeterministico.getMatriz()[i][0] = automataDeterministico.getQ().get(i - 1);   // setea los estados de la matriz
+        }
+        for (int i = 1; i < automataDeterministico.getMatriz()[0].length; i++) {
+            automataDeterministico.getMatriz()[0][i] = automataDeterministico.getE().get(i - 1);  // setea el abecedario de la matriz
+        }
+        for (int i = 0; i < mapa.size(); i++) {
+            for (int j = 1; j < automataDeterministico.getMatriz()[0].length; j++) {
+                if (mapa.get(i).getRead().equals(automataDeterministico.getMatriz()[0][j])) {
+                    automataDeterministico.getMatriz()[Integer.parseInt(mapa.get(i).getFrom())+1][j] = mapa.get(i).getTo();  //setea los campos de la matriz desde el mapeo
+                }
+            }
+        }
         return automataDeterministico;
     }
 

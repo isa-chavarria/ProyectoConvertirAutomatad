@@ -73,11 +73,11 @@ public class WriteXML {
             Element automaton = doc.createElement("automaton");
             rootElement.appendChild(automaton);
 
-            for(int i=0;i<5;i++){
+            for (int i = 0; i < automata.getQ().size(); i++) {
                 // sate elements
                 Element state = doc.createElement("state");
-                state.setAttribute("id", ""+i);
-                state.setAttribute("name", "q"+i);
+                state.setAttribute("id", "" + i);
+                state.setAttribute("name", "q" + i);
                 automaton.appendChild(state);
 
                 //x y
@@ -87,25 +87,62 @@ public class WriteXML {
                 Element y = doc.createElement("y");
                 y.appendChild(doc.createTextNode("50.0"));
                 state.appendChild(y);
-                Element finalVar= doc.createElement("final");
-                state.appendChild(finalVar);
+                if (automata.getF().contains(i + "")) {
+                    Element finalVar = doc.createElement("final");
+                    state.appendChild(finalVar);
+                }
+                if (i == 0) {
+                    Element initial = doc.createElement("initial");
+                    state.appendChild(initial);
+                }
+            }
+            boolean flag = false;
+            for (int i = 1; i < automata.getMatriz().length; i++) {
+                for (int j = 1; j < automata.getMatriz()[0].length; j++) {
+                    if (automata.getMatriz()[i][j].equals("")) {
+                        // sate elements
+                        Element state = doc.createElement("state");
+                        state.setAttribute("id", "" + automata.getQ().size());
+                        state.setAttribute("name", "Error");
+                        automaton.appendChild(state);
+
+                        //x y
+                        Element x = doc.createElement("x");
+                        x.appendChild(doc.createTextNode("" + (i * 10)));
+                        state.appendChild(x);
+                        Element y = doc.createElement("y");
+                        y.appendChild(doc.createTextNode("50.0"));
+                        state.appendChild(y);
+                        flag = true;
+                        break;
+                    }
+                }
             }
 
-            for(int i=0;i<5;i++){
-                // sate elements
-                Element transition = doc.createElement("transition");
-                automaton.appendChild(transition);
+            for (int i = 1; i < automata.getMatriz().length; i++) {
+                for (int j = 1; j < automata.getMatriz()[0].length; j++) {
+                    // sate elements
+                    Element transition = doc.createElement("transition");
+                    automaton.appendChild(transition);
 
-                //x y
-                Element from = doc.createElement("from");
-                from.appendChild(doc.createTextNode("" + i));
-                transition.appendChild(from);
-                Element to = doc.createElement("to");
-                to.appendChild(doc.createTextNode("" + i));
-                transition.appendChild(to);
-                Element read= doc.createElement("read");
-                read.appendChild(doc.createTextNode("" + (i%2)));
-                transition.appendChild(read);
+                    //x y
+                    Element from = doc.createElement("from");
+                    from.appendChild(doc.createTextNode(automata.getMatriz()[i][0]));
+                    transition.appendChild(from);
+                    Element to = doc.createElement("to");
+                    if (automata.getMatriz()[i][j].equals("")) {
+                        to.appendChild(doc.createTextNode(""+ automata.getQ().size()));
+                    } else {
+                        to.appendChild(doc.createTextNode(automata.getMatriz()[i][j]));
+                    }
+                    transition.appendChild(to);
+                    Element read = doc.createElement("read");
+                    read.appendChild(doc.createTextNode(automata.getMatriz()[0][j]));
+                    transition.appendChild(read);
+                }
+            }
+            if(flag){ //si hay estado de error
+                
             }
 
             // write the content into xml file
@@ -124,11 +161,11 @@ public class WriteXML {
             xmlString = xmlString.replaceAll("encoding=\"UTF-8\"", "encoding=\"UTF-8\" standalone=\"no\"");
             System.out.println(xmlString);
             BufferedWriter writer = null;
-            writer = new BufferedWriter( new FileWriter(file + ".jff"));
-            writer.write( xmlString);
-            if(writer != null)
+            writer = new BufferedWriter(new FileWriter(file + ".jff"));
+            writer.write(xmlString);
+            if (writer != null) {
                 writer.close();
-
+            }
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
