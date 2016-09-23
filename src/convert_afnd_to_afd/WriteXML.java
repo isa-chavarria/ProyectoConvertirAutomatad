@@ -142,7 +142,19 @@ public class WriteXML {
                 }
             }
             if(flag){ //si hay estado de error
-                
+                for (int i = 0; i < automata.getE().size(); i++) {
+                    Element transition = doc.createElement("transition");
+                    automaton.appendChild(transition);
+                    Element from = doc.createElement("from");
+                    from.appendChild(doc.createTextNode("" + automata.getQ().size()));
+                    transition.appendChild(from);
+                    Element to = doc.createElement("to");
+                    to.appendChild(doc.createTextNode("" + automata.getQ().size()));
+                    transition.appendChild(to);
+                    Element read = doc.createElement("read");
+                    read.appendChild(doc.createTextNode(automata.getE().get(i)));
+                    transition.appendChild(read);
+                }
             }
 
             // write the content into xml file
