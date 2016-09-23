@@ -78,11 +78,17 @@ public class AutomataNoDeterministico {
         return s.toString();
     }
 
-    public ArrayList<String> getEstado(String estado, String lenguaje) {
+    public ArrayList<String> getEstado(ArrayList<String> estados, String lenguaje) {
         ArrayList<String> ListaEstados = new ArrayList<>();
         for (int i = 1; i < matriz[0].length; i++) {
-            if (matriz[0][i].get(0).equals(lenguaje)) {
-                ListaEstados = matriz[Integer.parseInt(estado) + 1][i];
+            if (matriz[0][i].get(0).equals(lenguaje)) {  //column number
+                for (int j = 0; j < estados.size(); j++) {  // numero de estados
+                    for (int k = 0; k < matriz[Integer.parseInt(estados.get(j)) + 1][i].size(); k++) { //estados dentro de cada celda
+                        if (!ListaEstados.contains(matriz[Integer.parseInt(estados.get(j)) + 1][i].get(k))) {  //si ya estaba agregado
+                            ListaEstados.add(matriz[Integer.parseInt(estados.get(j)) + 1][i].get(k));
+                        }
+                    }
+                }
                 break;
             }
         }
@@ -91,8 +97,7 @@ public class AutomataNoDeterministico {
 
     public ArrayList<String> getEstadosConTranVacias(ArrayList<String> estados) {
         ArrayList<String> ListaEstadosConCerradura = estados;
-        int i;
-        for (i = 0; i < estados.size(); i++) {
+        for (int i = 0; i < estados.size(); i++) {
             for (int j = 1; j < matriz[0].length; j++) {
                 if (matriz[0][j].get(0).equals("")) {
                     for (int k = 0; k < matriz[Integer.parseInt(estados.get(i)) + 1][j].size(); k++) {
@@ -125,7 +130,7 @@ public class AutomataNoDeterministico {
     public String addAndGetNewState(ArrayList<String> listaVacios, String estadoNuevo) {
         //listaVacios.sort(null);
         for (int i = 0; i <= contador; i++) {
-            if (listaVacios == hashMap.get(("" + i))) {
+            if (listaVacios.equals(hashMap.get(("" + i)))) {
                 return "" + i;
             }
         }
@@ -144,23 +149,21 @@ public class AutomataNoDeterministico {
         ArrayList<String> estadosVacios = new ArrayList<>();
         estadosVacios = getEstadosConTranVacias(newE);
         String est = addAndGetNewState(estadosVacios, "");
-        newE = hashMap.get("" + 0);
-        for (String nuevoEstado : newEtemp) {
-            for (String estado : newE) {
-                for (String lenguaje : E) {
-                    if (!lenguaje.equals("")) {
-                        estados = getEstado(estado, lenguaje);
-                        if (!estados.isEmpty()) {
-                            estadosVacios = getEstadosConTranVacias(estados);
-                            est = addAndGetNewState(estadosVacios, nuevoEstado);
-                            setToNewMatriz(mapa, estado, lenguaje, est);
-                        } else {
-                            setToNewMatriz(mapa, estado, lenguaje, ""); //va a un estado de error con ""
-                        }
+        for (int j = 0; j <= contador; j++) { 
+            newE = hashMap.get("" + j);
+            for (String lenguaje : E) {
+                if (!lenguaje.equals("")) {
+                    estados = getEstado(newE, lenguaje);
+                    if (!estados.isEmpty()) {
+                        estadosVacios = getEstadosConTranVacias(estados);
+                        est = addAndGetNewState(estadosVacios, "" + contador);
+                        setToNewMatriz(mapa, ""+ j, lenguaje, est);
+                    } else {
+                        setToNewMatriz(mapa, ""+ j, lenguaje, ""); //va a un estado de error con ""
                     }
                 }
             }
-            newE = hashMap.get(nuevoEstado);
+           
         }
         setMatrizAutodeterministica(automataDeterministico);  //setea el alfabeto
         automataDeterministico.setI("0");  //setea estado inicial
@@ -193,7 +196,7 @@ public class AutomataNoDeterministico {
         for (int i = 0; i < mapa.size(); i++) {
             for (int j = 1; j < automataDeterministico.getMatriz()[0].length; j++) {
                 if (mapa.get(i).getRead().equals(automataDeterministico.getMatriz()[0][j])) {
-                    automataDeterministico.getMatriz()[Integer.parseInt(mapa.get(i).getFrom())+1][j] = mapa.get(i).getTo();  //setea los campos de la matriz desde el mapeo
+                    automataDeterministico.getMatriz()[Integer.parseInt(mapa.get(i).getFrom()) + 1][j] = mapa.get(i).getTo();  //setea los campos de la matriz desde el mapeo
                 }
             }
         }
