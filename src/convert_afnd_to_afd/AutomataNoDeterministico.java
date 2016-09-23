@@ -145,14 +145,14 @@ public class AutomataNoDeterministico {
         estadosVacios = getEstadosConTranVacias(newE);
         String est = addAndGetNewState(estadosVacios, "");
         newE = hashMap.get("" + 0);
-        for (String nuevoEstado : newEtemp) {
+        for (int j = 0; j < contador; j++) {
             for (String estado : newE) {
                 for (String lenguaje : E) {
                     if (!lenguaje.equals("")) {
                         estados = getEstado(estado, lenguaje);
                         if (!estados.isEmpty()) {
                             estadosVacios = getEstadosConTranVacias(estados);
-                            est = addAndGetNewState(estadosVacios, nuevoEstado);
+                            est = addAndGetNewState(estadosVacios, ""+contador);
                             setToNewMatriz(mapa, estado, lenguaje, est);
                         } else {
                             setToNewMatriz(mapa, estado, lenguaje, ""); //va a un estado de error con ""
@@ -160,7 +160,7 @@ public class AutomataNoDeterministico {
                     }
                 }
             }
-            newE = hashMap.get(nuevoEstado);
+            newE = hashMap.get( "" + contador);
         }
         setMatrizAutodeterministica(automataDeterministico);  //setea el alfabeto
         automataDeterministico.setI("0");  //setea estado inicial
