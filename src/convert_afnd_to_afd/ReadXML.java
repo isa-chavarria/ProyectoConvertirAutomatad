@@ -19,11 +19,8 @@ import org.xml.sax.SAXException;
  */
 public class ReadXML {
 
-    public ReadXML() {
-        automata = new AutomataNoDeterministico();
-    }
-
-    public void read(String file) {
+    public static AutomataNoDeterministico read(String file) {
+        AutomataNoDeterministico automata = new AutomataNoDeterministico();
         try {
 
             File fXmlFile = new File(file);
@@ -103,15 +100,7 @@ public class ReadXML {
         } catch (ParserConfigurationException | SAXException | IOException | DOMException e) {
             System.err.println(e.getMessage());
         }
-    }
-
-    public AutomataNoDeterministico getAutomata() {
+        
         return automata;
     }
-
-    public void setAutomata(AutomataNoDeterministico automata) {
-        this.automata = automata;
-    }
-
-    private AutomataNoDeterministico automata;
 }

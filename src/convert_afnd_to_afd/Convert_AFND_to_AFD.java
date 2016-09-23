@@ -5,9 +5,7 @@
  */
 package convert_afnd_to_afd;
 
-import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,36 +17,29 @@ public class Convert_AFND_to_AFD {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ReadXML xml = new ReadXML();
-        xml.read(chooseFile().getAbsolutePath());
-        WriteXML.writeXMLFile(xml.getAutomata().convertir_AFND_TO_AFD(),"C://Users//malvarado//Desktop//AFDnew");
+        validarArgumentos(args);
         
-        
-    }
-    private static File chooseFile() {
-        File r = null;
-        JFileChooser fc = new JFileChooser();
-
-        fc.setDialogTitle("Cargar el Automata");
-
-        fc.setFileFilter(new FileFilter() {
-
-            @Override
-            public boolean accept(File f) {
-                return f.isDirectory() || f.getName().endsWith(".jff");
+        for(String arg : args){
+            System.out.println("Validando " + arg);
+            if(!ValidarXSD.validateXMLSchema("jflap.xsd", arg)){
+                System.out.println("Archivo " + arg + " no tiene el formato correcto");
             }
-
-            @Override
-            public String getDescription() {
-                return "Automatas";
+            else{
+                System.out.println("Archivo valido");
+                String nombre = arg.substring(0, arg.length()-4);
+                String ext = arg.substring(arg.length()-4, arg.length());
+                AutomataNoDeterministico and = ReadXML.read(arg);
+                
+                AutomataDeterministico ad = and.convertir_AFND_TO_AFD();
+                WriteXML.writeXMLFile(ad, nombre + "-deterministico" + ext);
             }
-
-        });
-
-        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            r = fc.getSelectedFile();
         }
-
-        return r;
+    }
+    
+    public static void validarArgumentos(String[] args){
+        if(args.length == 0){
+            System.out.println("Uso: Convert_AFND_to_AFD <archivo1 archivos2 ...>");
+            System.exit(0);
+        }
     }
 }
