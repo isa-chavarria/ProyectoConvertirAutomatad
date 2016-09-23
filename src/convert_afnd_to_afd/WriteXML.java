@@ -131,7 +131,7 @@ public class WriteXML {
                     transition.appendChild(from);
                     Element to = doc.createElement("to");
                     if (automata.getMatriz()[i][j].equals("")) {
-                        to.appendChild(doc.createTextNode("" + automata.getQ().size()));
+                        to.appendChild(doc.createTextNode(""+ automata.getQ().size()));
                     } else {
                         to.appendChild(doc.createTextNode(automata.getMatriz()[i][j]));
                     }
@@ -141,20 +141,8 @@ public class WriteXML {
                     transition.appendChild(read);
                 }
             }
-            if (flag) { //si hay estado de error
-                for (int i = 0; i < automata.getE().size(); i++) {
-                    Element transition = doc.createElement("transition");
-                    automaton.appendChild(transition);
-                    Element from = doc.createElement("from");
-                    from.appendChild(doc.createTextNode("" + automata.getQ().size()));
-                    transition.appendChild(from);
-                    Element to = doc.createElement("to");
-                    to.appendChild(doc.createTextNode("" + automata.getQ().size()));
-                    transition.appendChild(to);
-                    Element read = doc.createElement("read");
-                    read.appendChild(doc.createTextNode(automata.getE().get(i)));
-                    transition.appendChild(read);
-                }
+            if(flag){ //si hay estado de error
+                
             }
 
             // write the content into xml file
