@@ -1,6 +1,7 @@
 package convert_afnd_to_afd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -78,6 +79,27 @@ public class AutomataNoDeterministico {
         return s.toString();
     }
 
+    public boolean equalLists(ArrayList<String> one, ArrayList<String> two) {
+        if (one == null && two == null) {
+            return true;
+        }
+
+        if ((one == null && two != null)
+                || one != null && two == null
+                || one.size() != two.size()) {
+            return false;
+        }
+
+    //to avoid messing the order of the lists we will use a copy
+        //as noted in comments by A. R. S.
+        one = new ArrayList<String>(one);
+        two = new ArrayList<String>(two);
+
+        Collections.sort(one);
+        Collections.sort(two);
+        return one.equals(two);
+    }
+
     public ArrayList<String> getEstado(ArrayList<String> estados, String lenguaje) {
         ArrayList<String> ListaEstados = new ArrayList<>();
         for (int i = 1; i < matriz[0].length; i++) {
@@ -130,7 +152,7 @@ public class AutomataNoDeterministico {
     public String addAndGetNewState(ArrayList<String> listaVacios, String estadoNuevo) {
         //listaVacios.sort(null);
         for (int i = 0; i <= contador; i++) {
-            if (listaVacios.equals(hashMap.get(("" + i)))) {
+            if (equalLists(listaVacios,hashMap.get(("" + i)))) {
                 return "" + i;
             }
         }
@@ -149,7 +171,7 @@ public class AutomataNoDeterministico {
         ArrayList<String> estadosVacios = new ArrayList<>();
         estadosVacios = getEstadosConTranVacias(newE);
         String est = addAndGetNewState(estadosVacios, "");
-        for (int j = 0; j <= contador; j++) { 
+        for (int j = 0; j <= contador; j++) {
             newE = hashMap.get("" + j);
             for (String lenguaje : E) {
                 if (!lenguaje.equals("")) {
@@ -157,13 +179,13 @@ public class AutomataNoDeterministico {
                     if (!estados.isEmpty()) {
                         estadosVacios = getEstadosConTranVacias(estados);
                         est = addAndGetNewState(estadosVacios, "" + contador);
-                        setToNewMatriz(mapa, ""+ j, lenguaje, est);
+                        setToNewMatriz(mapa, "" + j, lenguaje, est);
                     } else {
-                        setToNewMatriz(mapa, ""+ j, lenguaje, ""); //va a un estado de error con ""
+                        setToNewMatriz(mapa, "" + j, lenguaje, ""); //va a un estado de error con ""
                     }
                 }
             }
-           
+
         }
         setMatrizAutodeterministica(automataDeterministico);  //setea el alfabeto
         automataDeterministico.setI("0");  //setea estado inicial

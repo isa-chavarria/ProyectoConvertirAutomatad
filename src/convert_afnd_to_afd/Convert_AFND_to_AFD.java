@@ -17,9 +17,10 @@ public class Convert_AFND_to_AFD {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        validarArgumentos(args);
+        //validarArgumentos(args);
         
-        for(String arg : args){
+        //for(String arg : args){
+        String arg = "C:\\Users\\Mario\\Desktop\\ex2.jff";
             System.out.println("Validando " + arg);
             if(!ValidarXSD.validateXMLSchema("jflap.xsd", arg)){
                 System.out.println("Archivo " + arg + " no tiene el formato correcto");
@@ -33,7 +34,7 @@ public class Convert_AFND_to_AFD {
                 AutomataDeterministico ad = and.convertir_AFND_TO_AFD();
                 WriteXML.writeXMLFile(ad, nombre + "-deterministico" + ext);
             }
-        }
+        //}
     }
     
     public static void validarArgumentos(String[] args){
