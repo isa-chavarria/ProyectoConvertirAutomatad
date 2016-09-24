@@ -5,10 +5,7 @@
  */
 package convert_afnd_to_afd;
 
-/**
- *
- * @author Mario
- */
+
 public class Mapeo {
     private String from;
     private String read;

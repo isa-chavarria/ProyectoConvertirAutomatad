@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-/**
- *
- * @author Mario
- */
 public class AutomataNoDeterministico {
 
     public AutomataNoDeterministico() {

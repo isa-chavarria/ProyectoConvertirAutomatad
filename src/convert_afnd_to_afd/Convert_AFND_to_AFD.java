@@ -7,10 +7,7 @@ package convert_afnd_to_afd;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Mario
- */
+
 public class Convert_AFND_to_AFD {
 
     /**

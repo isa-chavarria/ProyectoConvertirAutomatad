@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -28,10 +29,7 @@ import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-/**
- *
- * @author herdoiza
- */
+
 public class WriteXML {
 
     public static String prettyFormat(String input, int indent) {
@@ -82,10 +80,14 @@ public class WriteXML {
 
                 //x y
                 Element x = doc.createElement("x");
-                x.appendChild(doc.createTextNode("" + (i * 10)));
+                x.appendChild(doc.createTextNode("" + (i * 150)));
                 state.appendChild(x);
                 Element y = doc.createElement("y");
-                y.appendChild(doc.createTextNode("50.0"));
+                Random randomGenerator = new Random();
+                int num = randomGenerator.nextInt(300);
+                int n = 100;
+                num = num + n;
+                y.appendChild(doc.createTextNode("" + num));
                 state.appendChild(y);
                 if (automata.getF().contains(i + "")) {
                     Element finalVar = doc.createElement("final");
@@ -96,6 +98,7 @@ public class WriteXML {
                     state.appendChild(initial);
                 }
             }
+            
             boolean flag = false;
             for (int i = 1; i < automata.getMatriz().length; i++) {
                 for (int j = 1; j < automata.getMatriz()[0].length; j++) {
@@ -117,8 +120,9 @@ public class WriteXML {
                         break;
                     }
                 }
+                if(flag) break;
             }
-
+            
             for (int i = 1; i < automata.getMatriz().length; i++) {
                 for (int j = 1; j < automata.getMatriz()[0].length; j++) {
                     // sate elements
